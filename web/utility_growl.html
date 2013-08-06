@@ -5,12 +5,13 @@
     <title>HTML Components - Growl</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="author" content="Gabor Szabo"/>
-    <link rel="import" href="packages/html_components/components/utility/growl.html"/>
-    <link rel="import" href="packages/html_components/components/utility/growl_message.html"/>
+    <link rel="import" href="packages/html_components_polymer/components/utility/growl.html"/>
+    <link rel="import" href="packages/html_components_polymer/components/utility/growl_message.html"/>
     <link rel="stylesheet" href="css/bootstrap.min.css"/>
     <link rel="stylesheet" href="css/bootstrap-responsive.min.css"/>
     <link rel="stylesheet" href="css/prettify.css"/>
     <link rel="stylesheet" href="css/style.css"/>
+    <script src="packages/polymer/boot.js"></script>
   </head>
   <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -61,18 +62,18 @@
             <fieldset>
               <legend>Post Message</legend>
               <label for="summary">Summary:</label>
-              <input id="summary" type="text" bind-value="growlForm.summary" required="required" autocomplete="off"/>
+              <input id="summary" type="text" required autocomplete="off"/>
               <label for="detail">Detail:</label>
-              <input id="detail" type="text" bind-value="growlForm.detail" required="required" autocomplete="off"/>
+              <input id="detail" type="text" required autocomplete="off"/>
               <label for="severity">Severity:</label>
-              <select id="severity" bind-value="growlForm.severity">
+              <select id="severity">
                 <option value="info">Info</option>
                 <option value="warn">Warn</option>
                 <option value="error">Error</option>
                 <option value="fatal">Fatal</option>
               </select>
             </fieldset>
-            <button class="btn btn-primary" on-click="growlForm.postGrowlMessage($event)">Post</button>
+            <button id="postGrowlMessageButton" class="btn btn-primary">Post</button>
           </form>
           
           <pre class="prettyprint lang-html" data-lang="HTML"
@@ -155,19 +156,16 @@ void main() {
       </div>
     </footer>
     
-    <div is="x-growl">
-      <div is="x-growl-message" summary="Default severity is info" detail="Message detail"></div>
-      <div is="x-growl-message" summary="Info" detail="Message detail" severity="info"></div>
-      <div is="x-growl-message" summary="Warn" detail="Message detail" severity="warn"></div>
-      <div is="x-growl-message" summary="Error" detail="Message detail" severity="error"></div>
-      <div is="x-growl-message" summary="Fatal" detail="Message detail" severity="fatal"></div>
-    </div>
+    <h-growl>
+      <template id="growlTemplate" repeat>
+        <h-growl-message summary="{{summary}}" detail="{{detail}}" severity="{{severity}}"></h-growl-message>
+      </template>
+    </h-growl>
     
     <script type="application/dart" src="utility_growl.dart"></script>
     <script src="js/jquery-2.0.2.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/run_prettify.js"></script>
     <script src="js/lang-dart.js"></script>
-    <script src="packages/browser/dart.js"></script>
   </body>
 </html>

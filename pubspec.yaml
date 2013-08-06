@@ -1,8 +1,8 @@
-name: html_components_app
-description: A sample WebUI application
+name: html_components_polymer_app
 dependencies:
   browser: any
-  html_components:
-    path: ../html_components
+  fancy_syntax: any
+  html_components_polymer:
+    path: ../html_components_polymer
   js: any
-  web_ui: any
+  polymer: any
