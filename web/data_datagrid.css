@@ -1,0 +1,3 @@
+div[is="x-datagrid"] > div[is="x-panel"] div {
+  text-align: center;
+}

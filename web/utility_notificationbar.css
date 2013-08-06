@@ -1,0 +1,9 @@
+div[is="x-notificationbar"] {
+  -webkit-var-top: 41px;
+  top: 41px;
+  position: fixed;
+}
+
+div[is="x-notificationbar"] span {
+  font-size: 36px;
+}

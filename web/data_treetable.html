@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <title>HTML Components - Treetable</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="author" content="Gabor Szabo"/>
+    <link rel="import" href="packages/html_components/components/data/column.html"/>
+    <link rel="import" href="packages/html_components/components/data/treetable.html"/>
+    <link rel="import" href="packages/html_components/components/utility/growl.html"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap-responsive.min.css"/>
+    <link rel="stylesheet" href="css/prettify.css"/>
+    <link rel="stylesheet" href="css/style.css"/>
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="index.html">HTML Components</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li><a href="index.html">Home</a></li>
+              <li class="dropdown">
+                <a href="components.html" class="dropdown-toggle" data-toggle="dropdown">Components <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="data.html">Data</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="container-fluid">
+      <div class="page-header">
+        <h1>Treetable Component</h1>
+        <ul class="breadcrumb">
+          <li><a href="components.html">HTML Components</a> <span class="divider">/</span></li>
+          <li><a href="data.html">Data Components</a> <span class="divider">/</span></li>
+          <li class="active">Treetable</li>
+        </ul>
+      </div>
+      
+      <div class="row-fluid">
+        <div class="span2">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header">Data</li>
+              <li class="active"><a href="data_treetable.html">Treetable</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="span10">
+          <form>
+            <fieldset>
+              <legend>Client Side Data and Single Selection</legend>
+              <div is="x-treetable"
+                   class="documents"
+                   selection="single">
+                <header>Document Viewer</header>
+                
+                <div is="x-column">
+                  <header>Name</header>
+                  <span>${name}</span>
+                  <footer>Name</footer>
+                </div>
+                
+                <div is="x-column" textalign="right">
+                  <header>Size</header>
+                  <span>${size}</span>
+                  <footer>Size</footer>
+                </div>
+                
+                <div is="x-column">
+                  <header>Type</header>
+                  <span>${type}</span>
+                  <footer>Type</footer>
+                </div>
+                
+                <footer>Document Viewer</footer>
+              </div>
+              <pre class="prettyprint lang-html" data-lang="HTML"
+>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;link rel="import" href="packages/html_components/components/data/column.html"/&gt;
+    &lt;link rel="import" href="packages/html_components/components/data/treetable.html"/&gt;
+    &lt;link rel="import" href="packages/html_components/components/utility/growl.html"/&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div is="x-treetable"
+         class="documents"
+         selection="single"&gt;
+      &lt;header&gt;Document Viewer&lt;/header&gt;
+      
+      &lt;div is="x-column"&gt;
+        &lt;header&gt;Name&lt;/header&gt;
+        &lt;span&gt;${name}&lt;/span&gt;
+        &lt;footer&gt;Name&lt;/footer&gt;
+      &lt;/div&gt;
+      
+      &lt;div is="x-column" textalign="right"&gt;
+        &lt;header&gt;Size&lt;/header&gt;
+        &lt;span&gt;${size}&lt;/span&gt;
+        &lt;footer&gt;Size&lt;/footer&gt;
+      &lt;/div&gt;
+      
+      &lt;div is="x-column"&gt;
+        &lt;header&gt;Type&lt;/header&gt;
+        &lt;span&gt;${type}&lt;/span&gt;
+        &lt;footer&gt;Type&lt;/footer&gt;
+      &lt;/div&gt;
+      
+      &lt;footer&gt;Document Viewer&lt;/footer&gt;
+    &lt;/div&gt;
+    
+    &lt;div is="x-growl" lifetime="5000"&gt;&lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</pre>
+            </fieldset>
+            
+            <fieldset>
+              <legend>Server Side Data, Multiple Selection and Resizable Columns</legend>
+              <div is="x-treetable"
+                   root="/services/treetable/documents"
+                   selection="multiple">
+                <header>Document Viewer</header>
+                
+                <div is="x-column" resizable="true">
+                  <header>Name</header>
+                  <span>${name}</span>
+                </div>
+                
+                <div is="x-column" textalign="right" resizable="true">
+                  <header>Size</header>
+                  <span>${size}</span>
+                </div>
+                
+                <div is="x-column" resizable="true">
+                  <header>Type</header>
+                  <span>${type}</span>
+                </div>
+              </div>
+              <pre class="prettyprint lang-html" data-lang="HTML"
+>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;link rel="import" href="packages/html_components/components/data/column.html"/&gt;
+    &lt;link rel="import" href="packages/html_components/components/data/treetable.html"/&gt;
+    &lt;link rel="import" href="packages/html_components/components/utility/growl.html"/&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div is="x-treetable"
+         root="/services/treetable/documents"
+         selection="multiple"&gt;
+      &lt;header&gt;Document Viewer&lt;/header&gt;
+      
+      &lt;div is="x-column" resizable="true"&gt;
+        &lt;header&gt;Name&lt;/header&gt;
+        &lt;span&gt;${name}&lt;/span&gt;
+      &lt;/div&gt;
+      
+      &lt;div is="x-column" textalign="right" resizable="true"&gt;
+        &lt;header&gt;Size&lt;/header&gt;
+        &lt;span&gt;${size}&lt;/span&gt;
+      &lt;/div&gt;
+      
+      &lt;div is="x-column" resizable="true"&gt;
+        &lt;header&gt;Type&lt;/header&gt;
+        &lt;span&gt;${type}&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    
+    &lt;div is="x-growl" lifetime="5000"&gt;&lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</pre>
+            </fieldset>
+            
+            <fieldset>
+              <legend>Dart code</legend>
+              <pre class="prettyprint lang-dart" data-lang="Dart"
+>import "package:web_ui/web_ui.dart";
+import "dart:html";
+import "dart:async";
+import "dart:json" as json;
+import "package:html_components/components/data/treetable.dart";
+import "package:html_components/components/utility/growl.dart";
+import "data/data.dart" as data;
+
+String _getStringDetail(String detail) {
+  try {
+    Map map = json.parse(detail);
+    return map["name"];
+  }
+  on FormatException catch (error) {
+    return detail;
+  }
+}
+
+List&lt;String&gt; _getSelectionAsString(List&lt;TreeNode&gt; nodes) {
+  List&lt;String&gt; result = [];
+  
+  for (TreeNode node in nodes) {
+    if (node.data is Map) {
+      result.add(node.data["name"]);
+    }
+    else {
+      result.add(node.data.name);
+    }
+  }
+  
+  return result;
+}
+
+void main() {
+  Timer.run(() {
+    queryAll('div[is="x-treetable"]').forEach((Element element) {
+      TreetableComponent treetableComponent = element.xtag;
+      
+      treetableComponent.onExpanded.listen((CustomEvent event) {
+        String stringDetail = _getStringDetail(event.detail);
+        GrowlComponent.postMessage("Expanded node:", stringDetail);
+      });
+      
+      treetableComponent.onCollapsed.listen((CustomEvent event) {
+        String stringDetail = _getStringDetail(event.detail);
+        GrowlComponent.postMessage("Collapsed node:", stringDetail);
+      });
+      
+      treetableComponent.onSelected.listen((Event event) {
+        List&lt;Object&gt; selectedNodes = treetableComponent.model.selectedNodes;
+        List&lt;String&gt; detailList = _getSelectionAsString(selectedNodes);
+        String selected = data.convertListToString(detailList);
+        GrowlComponent.postMessage("Selected nodes:", selected);
+      });
+      
+      treetableComponent.onColumnResized.listen((Event event) {
+        GrowlComponent.postMessage("", "Column resized!");
+      });
+    });
+    
+    query('div[is="x-treetable"].documents').xtag.root = data.getDocumentRoot();
+  });
+}</pre>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+    <footer>
+      <div class="container-fluid">
+        <div>
+          <p>&copy; <script>document.write(new Date().getFullYear())</script> Gabor Szabo</p>
+        </div>
+      </div>
+    </footer>
+    
+    <div is="x-growl" lifetime="5000"></div>
+    
+    <script type="application/dart" src="data_treetable.dart"></script>
+    <script src="js/jquery-2.0.2.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/run_prettify.js"></script>
+    <script src="js/lang-dart.js"></script>
+    <script src="packages/browser/dart.js"></script>
+  </body>
+</html>

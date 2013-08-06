@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <title>HTML Components - Carousel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="author" content="Gabor Szabo"/>
+    <link rel="import" href="packages/html_components/components/panel/tab.html"/>
+    <link rel="import" href="packages/html_components/components/data/carousel.html"/>
+    <link rel="import" href="packages/html_components/components/utility/growl.html"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap-responsive.min.css"/>
+    <link rel="stylesheet" href="css/prettify.css"/>
+    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="data_carousel.css"/>
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="index.html">HTML Components</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li><a href="index.html">Home</a></li>
+              <li class="dropdown">
+                <a href="components.html" class="dropdown-toggle" data-toggle="dropdown">Components <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="data.html">Data</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="container-fluid">
+      <div class="page-header">
+        <h1>Carousel Component</h1>
+        <ul class="breadcrumb">
+          <li><a href="components.html">HTML Components</a> <span class="divider">/</span></li>
+          <li><a href="data.html">Data Components</a> <span class="divider">/</span></li>
+          <li class="active">Carousel</li>
+        </ul>
+      </div>
+      
+      <div class="row-fluid">
+        <div class="span2">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header">Data</li>
+              <li class="active"><a href="data_carousel.html">Carousel</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="span10">
+          <form>
+            <fieldset>
+              <legend>Data from Client Side</legend>
+              <div is="x-carousel"
+                   class="cars"
+                   visibleitems="3"
+                   pagelinks="5">
+                <header>Cars</header>
+                <template>
+                  <div class="car-item">
+                    <p>
+                      <img src="img/cars/${imagePath}" alt="${manufacturer}"/>
+                    </p>
+                    <p>${model}</p>
+                    <p>${year}</p>
+                    <p>${carousel:selectButton}</p>
+                  </div>
+                </template>
+                <footer>In total there are ${carousel:totalCount} cars.</footer>
+              </div>
+              <pre class="prettyprint" data-lang="HTML"
+>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;link rel="import" href="packages/html_components/components/data/carousel.html"/&gt;
+    &lt;link rel="import" href="packages/html_components/components/utility/growl.html"/&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div is="x-carousel"
+         class="cars"
+         visibleitems="3"
+         pagelinks="5"&gt;
+      &lt;header&gt;Cars&lt;/header&gt;
+      &lt;template&gt;
+        &lt;div class="car-item"&gt;
+          &lt;p&gt;
+            &lt;img src="img/cars/${imagePath}" alt="${manufacturer}"/&gt;
+          &lt;/p&gt;
+          &lt;p&gt;${model}&lt;/p&gt;
+          &lt;p&gt;${year}&lt;/p&gt;
+          &lt;p&gt;${carousel:selectButton}&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/template&gt;
+      &lt;footer&gt;In total there are ${carousel:totalCount} cars.&lt;/footer&gt;
+    &lt;/div&gt;
+    
+    &lt;div is="x-growl" lifetime="5000"&gt;&lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</pre>
+            </fieldset>
+            
+            <fieldset>
+              <legend>Data from Server Side</legend>
+              <div is="x-carousel"
+                   data="/services/carousel/cars/11"
+                   visibleitems="3">
+                <header>Cars</header>
+                <template>
+                  <div class="car-item">
+                    <p>
+                      <img src="img/cars/${imagePath}" alt="${manufacturer}"/>
+                    </p>
+                    <p>${model}</p>
+                    <p>${year}</p>
+                    <p>${carousel:selectButton}</p>
+                  </div>
+                </template>
+                <footer>In total there are ${carousel:totalCount} cars.</footer>
+              </div>
+              <pre class="prettyprint lang-html" data-lang="HTML"
+>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;link rel="import" href="packages/html_components/components/data/carousel.html"/&gt;
+    &lt;link rel="import" href="packages/html_components/components/utility/growl.html"/&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div is="x-carousel"
+         data="/services/carousel/cars/11"
+         visibleitems="3"&gt;
+      &lt;header&gt;Cars&lt;/header&gt;
+      &lt;template&gt;
+        &lt;div class="car-item"&gt;
+          &lt;p&gt;
+            &lt;img src="img/cars/${imagePath}" alt="${manufacturer}"/&gt;
+          &lt;/p&gt;
+          &lt;p&gt;${model}&lt;/p&gt;
+          &lt;p&gt;${year}&lt;/p&gt;
+          &lt;p&gt;${carousel:selectButton}&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/template&gt;
+      &lt;footer&gt;In total there are ${carousel:totalCount} cars.&lt;/footer&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</pre>
+            </fieldset>
+            
+            <fieldset>
+              <legend>Using Tabs</legend>
+              <div is="x-carousel"
+                   visibleitems="1">
+                <div is="x-tab" label="Godfather Part I" class="movie-item">
+                  <table>
+                    <tr>
+                      <td>
+                        <img src="img/godfather/godfather1.jpg" alt="Godfather 1"/>
+                      </td>
+                      <td>
+                        The story begins as Don Vito Corleone, the head of a New York Mafia family, oversees his daughter's wedding.
+                        His beloved son Michael has just come home from the war, but does not intend to become part of his father's business.
+                        Through Michael's life the nature of the family business becomes clear. The business of the family is just like the head
+                        of the family, kind and benevolent to those who give respect, but given to ruthless violence whenever anything
+                        stands against the good of the family.
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                <div is="x-tab" label="Godfather Part II" class="movie-item">
+                  <table>
+                    <tr>
+                      <td>
+                        <img src="img/godfather/godfather2.jpg" alt="Godfather 2"/>
+                      </td>
+                      <td>
+                        Francis Ford Coppola's legendary continuation and sequel to his landmark 1972 film, The Godfather,
+                        parallels the young Vito Corleone's rise with his son Michael's spiritual fall, deepening The Godfather's
+                        depiction of the dark side of the American dream.
+                        In the early 1900s, the child Vito flees his Sicilian village for America after the local Mafia
+                        kills his family. Vito struggles to make a living, legally or illegally, for his wife and growing brood in Little Italy,
+                        killing the local Black Hand Fanucci after he demands his customary cut of the tyro's business.
+                        With Fanucci gone, Vito's communal stature grows.
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                <div is="x-tab" label="Godfather Part III" class="movie-item">
+                  <table>
+                    <tr>
+                      <td>
+                        <img src="img/godfather/godfather3.jpg" alt="Godfather 3"/>
+                      </td>
+                      <td>
+                        After a break of more than 15 years, director Francis Ford Coppola and writer Mario Puzo returned to the
+                        well for this third and final story of the fictional Corleone crime family.
+                        Two decades have passed, and crime kingpin Michael Corleone, now divorced from his wife Kay has nearly
+                        succeeded in keeping his promise that his family would one day be completely legitimate.
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+              <pre class="prettyprint lang-html" data-lang="HTML"
+>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;link rel="import" href="packages/html_components/components/panel/tab.html"/&gt;
+    &lt;link rel="import" href="packages/html_components/components/data/carousel.html"/&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div is="x-carousel"
+         visibleitems="1"&gt;
+      &lt;div is="x-tab" label="Godfather Part I" class="movie-item"&gt;
+        &lt;table&gt;
+          &lt;tr&gt;
+            &lt;td&gt;
+              &lt;img src="img/godfather/godfather1.jpg" alt="Godfather 1"/&gt;
+            &lt;/td&gt;
+            &lt;td&gt;
+              The story begins as Don Vito Corleone, the head of a New York Mafia family, oversees his daughter's wedding. His beloved son Michael has just come home from the war, but does not intend to become part of his father's business. Through Michael's life the nature of the family business becomes clear. The business of the family is just like the head of the family, kind and benevolent to those who give respect, but given to ruthless violence whenever anything stands against the good of the family.
+            &lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/table&gt;
+      &lt;/div&gt;
+      &lt;div is="x-tab" label="Godfather Part II" class="movie-item"&gt;
+        &lt;table&gt;
+          &lt;tr&gt;
+            &lt;td&gt;
+              &lt;img src="img/godfather/godfather2.jpg" alt="Godfather 2"/&gt;
+            &lt;/td&gt;
+            &lt;td&gt;
+              Francis Ford Coppola's legendary continuation and sequel to his landmark 1972 film, The Godfather, parallels the young Vito Corleone's rise with his son Michael's spiritual fall, deepening The Godfather's depiction of the dark side of the American dream. In the early 1900s, the child Vito flees his Sicilian village for America after the local Mafia kills his family. Vito struggles to make a living, legally or illegally, for his wife and growing brood in Little Italy, killing the local Black Hand Fanucci after he demands his customary cut of the tyro's business. With Fanucci gone, Vito's communal stature grows.
+            &lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/table&gt;
+      &lt;/div&gt;
+      &lt;div is="x-tab" label="Godfather Part III" class="movie-item"&gt;
+        &lt;table&gt;
+          &lt;tr&gt;
+            &lt;td&gt;
+              &lt;img src="img/godfather/godfather3.jpg" alt="Godfather 3"/&gt;
+            &lt;/td&gt;
+            &lt;td&gt;
+              After a break of more than 15 years, director Francis Ford Coppola and writer Mario Puzo returned to the well for this third and final story of the fictional Corleone crime family. Two decades have passed, and crime kingpin Michael Corleone, now divorced from his wife Kay has nearly succeeded in keeping his promise that his family would one day be completely legitimate.
+            &lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/table&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</pre>
+            </fieldset>
+            
+            <fieldset>
+              <legend>Image Gallery</legend>
+              <div is="x-carousel"
+                   pagelinks="4"
+                   autoplayinterval="5000"
+                   visibleitems="1"
+                   circular="true">
+                <img src="img/nature/nature1.jpg" alt="Nature 1"/>
+                <img src="img/nature/nature2.jpg" alt="Nature 2"/>
+                <img src="img/nature/nature3.jpg" alt="Nature 3"/>
+                <img src="img/nature/nature4.jpg" alt="Nature 4"/>
+              </div>
+              <pre class="prettyprint lang-html" data-lang="HTML"
+>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;link rel="import" href="packages/html_components/components/data/carousel.html"/&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div is="x-carousel"
+         pagelinks="4"
+         autoplayinterval="5000"
+         visibleitems="1"
+         circular="true"&gt;
+      &lt;img src="img/nature/nature1.jpg" alt="Nature 1"/&gt;
+      &lt;img src="img/nature/nature2.jpg" alt="Nature 2"/&gt;
+      &lt;img src="img/nature/nature3.jpg" alt="Nature 3"/&gt;
+      &lt;img src="img/nature/nature4.jpg" alt="Nature 4"/&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</pre>
+            </fieldset>
+            
+            <fieldset>
+              <legend>Dart code</legend>
+              <pre class="prettyprint lang-dart" data-lang="Dart"
+>import "package:web_ui/web_ui.dart";
+import "dart:html";
+import "dart:async";
+import "dart:json" as json;
+import "package:html_components/components/data/carousel.dart";
+import "package:html_components/components/utility/growl.dart";
+import "data/data.dart" as data;
+
+void main() {
+  Timer.run(() {
+    queryAll('div[is="x-carousel"]').forEach((DivElement element) {
+      CarouselComponent carouselComponent = element.xtag;
+      
+      carouselComponent.onSelected.listen((CustomEvent event) {
+        String detail = event.detail;
+        
+        try {
+          Map map = json.parse(detail);
+          GrowlComponent.postMessage("Selected:", map["model"]);
+        }
+        on FormatException catch (error) {
+          GrowlComponent.postMessage("Selected:", detail);
+        }
+      });
+    });
+    
+    CarouselComponent carouselComponent = query('div[is="x-carousel"].cars').xtag;
+    carouselComponent.data = data.getCars(count: 12);
+  });
+}</pre>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+    <footer>
+      <div class="container-fluid">
+        <div>
+          <p>&copy; <script>document.write(new Date().getFullYear())</script> Gabor Szabo</p>
+        </div>
+      </div>
+    </footer>
+    
+    <div is="x-growl" lifetime="5000"></div>
+    
+    <script type="application/dart" src="data_carousel.dart"></script>
+    <script src="js/jquery-2.0.2.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/run_prettify.js"></script>
+    <script src="js/lang-dart.js"></script>
+    <script src="packages/browser/dart.js"></script>
+  </body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <title>HTML Components - Context Menu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="author" content="Gabor Szabo"/>
+    <link rel="import" href="packages/html_components/components/menu/contextmenu.html"/>
+    <link rel="import" href="packages/html_components/components/menu/submenu.html"/>
+    <link rel="import" href="packages/html_components/components/menu/menuseparator.html"/>
+    <link rel="import" href="packages/html_components/components/menu/menuitem.html"/>
+    <link rel="import" href="packages/html_components/components/utility/growl.html"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap-responsive.min.css"/>
+    <link rel="stylesheet" href="css/prettify.css"/>
+    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="menu_contextmenu.css"/>
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="index.html">HTML Components</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li><a href="index.html">Home</a></li>
+              <li class="dropdown">
+                <a href="components.html" class="dropdown-toggle" data-toggle="dropdown">Components <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="menu.html">Menu</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="container-fluid">
+      <div class="page-header">
+        <h1>Context Menu Component</h1>
+        <ul class="breadcrumb">
+          <li><a href="components.html">HTML Components</a> <span class="divider">/</span></li>
+          <li><a href="menu.html">Menu Components</a> <span class="divider">/</span></li>
+          <li class="active">Context Menu</li>
+        </ul>
+      </div>
+      
+      <div class="row-fluid">
+        <div class="span2">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header">Menu</li>
+              <li class="active"><a href="menu_contextmenu.html">Context Menu</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="span10">
+          <div is="x-contextmenu">
+            <li is="x-menuitem" icon="arrowrefresh-1-w">Update</li>
+            <li is="x-menuitem" icon="close">Delete</li>
+            <li is="x-menuseparator"></li>
+            <li is="x-menuitem" url="/" target="_blank" icon="extlink">HTML Components</li>  
+          </div>
+          
+          <div is="x-contextmenu" attachedto="image">
+            <li is="x-menuitem" icon="close">Remove</li>
+          </div>
+          
+          <img id="image" src="img/nature/nature1.jpg" alt="Nature"/>
+          
+          <pre class="prettyprint lang-html" data-lang="HTML"
+>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;link rel="import" href="packages/html_components/components/menu/contextmenu.html"/&gt;
+    &lt;link rel="import" href="packages/html_components/components/menu/submenu.html"/&gt;
+    &lt;link rel="import" href="packages/html_components/components/menu/menuseparator.html"/&gt;
+    &lt;link rel="import" href="packages/html_components/components/menu/menuitem.html"/&gt;
+    &lt;link rel="import" href="packages/html_components/components/utility/growl.html"/&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div is="x-contextmenu"&gt;
+      &lt;li is="x-menuitem" icon="arrowrefresh-1-w"&gt;Update&lt;/li&gt;
+      &lt;li is="x-menuitem" icon="close"&gt;Delete&lt;/li&gt;
+      &lt;li is="x-menuseparator"&gt;&lt;/li&gt;
+      &lt;li is="x-menuitem" url="/" target="_blank" icon="extlink"&gt;HTML Components&lt;/li&gt;
+    &lt;/div&gt;
+    
+    &lt;div is="x-contextmenu" attachedto="image"&gt;
+      &lt;li is="x-menuitem" icon="close"&gt;Remove&lt;/li&gt;
+    &lt;/div&gt;
+    
+    &lt;img id="image" src="img/nature/nature1.jpg" alt="Nature"/&gt;
+    
+    &lt;div is="x-growl" lifetime="5000"&gt;&lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</pre>
+          
+          <pre class="prettyprint lang-dart" data-lang="Dart"
+>import "dart:html";
+import "dart:async";
+import "package:animation/animation.dart" as animation;
+import "package:html_components/components/menu/contextmenu.dart";
+import "package:html_components/components/utility/growl.dart";
+
+void main() {
+  Timer.run(() {
+    queryAll('div[is="x-contextmenu"]').forEach((DivElement element) {
+      ContextMenuComponent contextMenuComponent = element.xtag;
+      
+      contextMenuComponent.onSelected.listen((CustomEvent event) {
+        if (event.detail == "Remove") {
+          ImageElement imageElement = query("#image");
+          imageElement.style.opacity = "0";
+          
+          Map&lt;String, Object&gt; animationProperties = {
+            "height": 0
+          };
+          
+          animation.animate(imageElement, properties: animationProperties, duration: 500).onComplete.listen((_) {
+            imageElement.remove();
+          });
+        }
+        else {
+          GrowlComponent.postMessage("New item selected", "Label of the selected item: ${event.detail}");
+        }
+      });
+    });
+  });
+}</pre>
+        </div>
+      </div>
+    </div>
+    
+    <footer>
+      <div class="container-fluid">
+        <div>
+          <p>&copy; <script>document.write(new Date().getFullYear())</script> Gabor Szabo</p>
+        </div>
+      </div>
+    </footer>
+    
+    <div is="x-growl" lifetime="5000"></div>
+    
+    <script type="application/dart" src="menu_contextmenu.dart"></script>
+    <script src="js/jquery-2.0.2.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/run_prettify.js"></script>
+    <script src="js/lang-dart.js"></script>
+    <script src="packages/browser/dart.js"></script>
+  </body>
+</html>

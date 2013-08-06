@@ -1,0 +1,8 @@
+name: html_components_app
+description: A sample WebUI application
+dependencies:
+  browser: any
+  html_components:
+    path: ../html_components
+  js: any
+  web_ui: any

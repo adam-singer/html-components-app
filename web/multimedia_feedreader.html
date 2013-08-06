@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <title>HTML Components - Feed Reader</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="author" content="Gabor Szabo"/>
+    <link rel="import" href="packages/html_components/components/multimedia/feedreader.html"/>
+    <link rel="import" href="packages/html_components/components/utility/growl.html"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap-responsive.min.css"/>
+    <link rel="stylesheet" href="css/prettify.css"/>
+    <link rel="stylesheet" href="css/style.css"/>
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="index.html">HTML Components</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li><a href="index.html">Home</a></li>
+              <li class="dropdown">
+                <a href="components.html" class="dropdown-toggle" data-toggle="dropdown">Components <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="multimedia.html">Multimedia</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="container-fluid">
+      <div class="page-header">
+        <h1>Feed Reader Component</h1>
+        <ul class="breadcrumb">
+          <li><a href="components.html">HTML Components</a> <span class="divider">/</span></li>
+          <li><a href="multimedia.html">Multimedia Components</a> <span class="divider">/</span></li>
+          <li class="active">Feed Reader</li>
+        </ul>
+      </div>
+      
+      <div class="row-fluid">
+        <div class="span2">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header">Multimedia</li>
+              <li class="active"><a href="multimedia_feedreader.html">Feed Reader</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="span10">
+          <div class="alert alert-danger">
+            <strong>Warning!</strong> Feed Reader only works in the Dartium browser right now.
+          </div>
+          <div is="x-feedreader"
+               url="/services/feedreader/sports"
+               maxitems="5"
+               autorefresh="true">
+            <template>
+              <p>
+                <b>${title}</b>
+              </p>
+              ${description}  
+            </template>
+          </div>
+          <pre class="prettyprint lang-html" data-lang="HTML"
+>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;link rel="import" href="packages/html_components/components/multimedia/feedreader.html"/&gt;
+    &lt;link rel="import" href="packages/html_components/components/utility/growl.html"/&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div is="x-feedreader"
+         url="/services/feedreader/sports"
+         maxitems="5"
+         autorefresh="true"&gt;
+      &lt;template&gt;
+        &lt;p&gt;
+          &lt;b&gt;${title}&lt;/b&gt;
+        &lt;/p&gt;
+        ${description}
+      &lt;/template&gt;
+    &lt;/div&gt;
+    
+    &lt;div is="x-growl" lifetime="5000"&gt;&lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</pre>
+          
+          <pre class="prettyprint lang-dart" data-lang="Dart"
+>import "dart:html";
+import "dart:async";
+import "package:html_components/components/multimedia/feedreader.dart";
+import "package:html_components/components/utility/growl.dart";
+
+void main() {
+  Timer.run(() {
+    queryAll('div[is="x-feedreader"]').forEach((DivElement element) {
+      FeedReaderComponent feedReaderComponent = element.xtag;
+      
+      feedReaderComponent.onRefreshed.listen((Event event) {
+        GrowlComponent.postMessage("", "Feed refreshed");
+      });
+    });
+  });
+}</pre>
+        </div>
+      </div>
+    </div>
+    
+    <footer>
+      <div class="container-fluid">
+        <div>
+          <p>&copy; <script>document.write(new Date().getFullYear())</script> Gabor Szabo</p>
+        </div>
+      </div>
+    </footer>
+    
+    <div is="x-growl" lifetime="5000"></div>
+    
+    <script type="application/dart" src="multimedia_feedreader.dart"></script>
+    <script src="js/jquery-2.0.2.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/run_prettify.js"></script>
+    <script src="js/lang-dart.js"></script>
+    <script src="packages/browser/dart.js"></script>
+  </body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <title>HTML Components - Rating</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="author" content="Gabor Szabo"/>
+    <link rel="import" href="packages/html_components/components/input/rating.html"/>
+    <link rel="import" href="packages/html_components/components/utility/growl.html"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap-responsive.min.css"/>
+    <link rel="stylesheet" href="css/prettify.css"/>
+    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="input_rating.css"/>
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="index.html">HTML Components</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li><a href="index.html">Home</a></li>
+              <li class="dropdown">
+                <a href="components.html" class="dropdown-toggle" data-toggle="dropdown">Components <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="input.html">Input</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="container-fluid">
+      <div class="page-header">
+        <h1>Rating Component</h1>
+        <ul class="breadcrumb">
+          <li><a href="components.html">HTML Components</a> <span class="divider">/</span></li>
+          <li><a href="input.html">Input Components</a> <span class="divider">/</span></li>
+          <li class="active">Rating</li>
+        </ul>
+      </div>
+      
+      <div class="row-fluid">
+        <div class="span2">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header">Input</li>
+              <li class="active"><a href="input_rating.html">Rating</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="span10">
+          <div is="x-rating"
+               stars="{{ratingForm.stars}}"
+               value="{{ratingForm.value}}"
+               cancelable="{{ratingForm.cancelable}}"
+               readonly="{{ratingForm.readonly}}"
+               disabled="{{ratingForm.disabled}}">
+          </div>
+          
+          <form>
+            <fieldset>
+              <legend>Configuration</legend>
+              <label for="stars">Stars:</label>
+              <input id="stars" type="number" bind-value="ratingForm.stars_bindable"/>
+              <label for="value">Value:</label>
+              <input id="value" type="number" bind-value="ratingForm.value_bindable"/>
+              <label class="checkbox">
+                <input type="checkbox" bind-checked="ratingForm.cancelable"/>
+                Cancelable
+              </label>
+              <label class="checkbox">
+                <input type="checkbox" bind-checked="ratingForm.readonly"/>
+                Readonly
+              </label>
+              <label class="checkbox">
+                <input type="checkbox" bind-checked="ratingForm.disabled"/>
+                Disabled
+              </label>
+            </fieldset>
+          </form>
+          
+          <pre class="prettyprint lang-html" data-lang="HTML"
+>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;link rel="import" href="packages/html_components/components/input/rating.html"/&gt;
+    &lt;link rel="import" href="packages/html_components/components/utility/growl.html"/&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div is="x-rating"
+         stars=""
+         value=""
+         cancelable=""
+         readonly=""
+         disabled=""&gt;
+    &lt;/div&gt;
+    
+    &lt;form&gt;
+      &lt;fieldset&gt;
+        &lt;legend&gt;Configuration&lt;/legend&gt;
+        &lt;label for="stars"&gt;Stars:&lt;/label&gt;
+        &lt;input id="stars" type="number" bind-value="ratingForm.stars_bindable"/&gt;
+        &lt;label for="value"&gt;Value:&lt;/label&gt;
+        &lt;input id="value" type="number" bind-value="ratingForm.value_bindable"/&gt;
+        &lt;label class="checkbox"&gt;
+          &lt;input type="checkbox" bind-checked="ratingForm.cancelable"/&gt;
+          Cancelable
+        &lt;/label&gt;
+        &lt;label class="checkbox"&gt;
+          &lt;input type="checkbox" bind-checked="ratingForm.readonly"/&gt;
+          Readonly
+        &lt;/label&gt;
+        &lt;label class="checkbox"&gt;
+          &lt;input type="checkbox" bind-checked="ratingForm.disabled"/&gt;
+          Disabled
+        &lt;/label&gt;
+      &lt;/fieldset&gt;
+    &lt;/form&gt;
+    
+    &lt;div is="x-growl" lifetime="5000"&gt;&lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</pre>
+          
+          <pre class="prettyprint lang-dart" data-lang="Dart"
+>import "package:web_ui/web_ui.dart";
+import "dart:html";
+import "dart:async";
+import "package:html_components/components/input/rating.dart";
+import "package:html_components/components/utility/growl.dart";
+
+@observable
+class RatingForm {
+  int stars = 5;
+  int value = 0;
+  bool cancelable = true;
+  bool readonly = false;
+  bool disabled = false;
+  
+  String get stars_bindable => stars.toString();
+  set stars_bindable(String stars_bindable) => stars = int.parse(stars_bindable);
+  
+  String get value_bindable => value.toString();
+  set value_bindable(String value_bindable) => value = int.parse(value_bindable);
+}
+
+RatingForm ratingForm = new RatingForm();
+
+void main() {
+  Timer.run(() {
+    queryAll('div[is="x-rating"]').forEach((Element element) {
+      RatingComponent ratingComponent = element.xtag;
+      
+      ratingComponent.onValueChanged.listen((Event event) {
+        int newValue = ratingComponent.value;
+        ratingForm.value = newValue;
+        GrowlComponent.postMessage("Value changed!", "New value: $newValue");
+      });
+    });
+  });
+}</pre>
+        </div>
+      </div>
+    </div>
+    
+    <footer>
+      <div class="container-fluid">
+        <div>
+          <p>&copy; <script>document.write(new Date().getFullYear())</script> Gabor Szabo</p>
+        </div>
+      </div>
+    </footer>
+    
+    <div is="x-growl" lifetime="5000"></div>
+    
+    <script type="application/dart" src="input_rating.dart"></script>
+    <script src="js/jquery-2.0.2.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/run_prettify.js"></script>
+    <script src="js/lang-dart.js"></script>
+    <script src="packages/browser/dart.js"></script>
+  </body>
+</html>

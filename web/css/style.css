@@ -1,0 +1,109 @@
+@media (min-width: 980px) {
+  body {
+    padding-top: 60px;
+  }  
+}
+
+.hero-unit > h1, .hero-unit > p:last-of-type {
+  margin-bottom: 50px;
+}
+
+footer > * {
+  margin-top: 20px;
+}
+
+table.table.table-striped {
+  margin-bottom: 80px;
+}
+
+.nav li.nav-header {
+  cursor: default;
+}
+
+footer .container-fluid div, footer .container div {
+  background-color: #f5f5f5;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+}
+
+footer p {
+  padding: 10px 0;
+  text-align: center;
+  color: #005580 !important;
+}
+
+form {
+  width: 660px;
+}
+
+form.form-horizontal {
+  width: auto;
+}
+
+pre {
+  margin-top: 50px;
+  margin-bottom: 50px !important;
+  position: relative !important;
+  display: block !important;
+  padding: 10px !important;
+  line-height: 22px !important;
+  word-break: break-all !important;
+  word-wrap: break-word !important;
+  white-space: pre-wrap !important;
+  background-color: #f5f5f5 !important;
+  border: 1px solid rgba(0,0,0,.15) !important;
+  -webkit-border-radius: 4px !important;
+  -moz-border-radius: 4px !important;
+  border-radius: 4px !important;
+}
+
+pre[data-lang]:after {
+  content: attr(data-lang);
+  background-color: darkgrey;
+  right: 0;
+  top: 0;
+  position: absolute;
+  font-size: 16pt;
+  color: white;
+  padding: 2px 25px;
+  text-transform: uppercase;
+}
+
+pre.prettyprint .kwd {
+  color: #000;
+  font-weight: bold;
+}
+
+pre.prettyprint .str {
+  color: #d14;
+}
+
+pre.prettyprint .pun {
+  color: #000;
+}
+
+pre.prettyprint .pln {
+  color: #000;
+}
+
+pre.prettyprint .typ {
+  color: #458;
+  font-weight: bold;
+}
+
+pre.prettyprint .com {
+  color: #998;
+}
+
+pre.prettyprint .tag {
+  color: navy;
+}
+
+pre.prettyprint .atn {
+  color: teal;
+}
+
+pre.prettyprint .atv {
+  color: #d14;
+}

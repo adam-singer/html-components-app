@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <title>HTML Components - Growl</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="author" content="Gabor Szabo"/>
+    <link rel="import" href="packages/html_components/components/utility/growl.html"/>
+    <link rel="import" href="packages/html_components/components/utility/growl_message.html"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap-responsive.min.css"/>
+    <link rel="stylesheet" href="css/prettify.css"/>
+    <link rel="stylesheet" href="css/style.css"/>
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="index.html">HTML Components</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li><a href="index.html">Home</a></li>
+              <li class="dropdown">
+                <a href="components.html" class="dropdown-toggle" data-toggle="dropdown">Components <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="utility.html">Utility</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="container-fluid">
+      <div class="page-header">
+        <h1>Growl Component</h1>
+        <ul class="breadcrumb">
+          <li><a href="components.html">HTML Components</a> <span class="divider">/</span></li>
+          <li><a href="utility.html">Utility Components</a> <span class="divider">/</span></li>
+          <li class="active">Growl</li>
+        </ul>
+      </div>
+      
+      <div class="row-fluid">
+        <div class="span2">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header">Utility</li>
+              <li class="active"><a href="utility_growl.html">Growl</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="span10">
+          <form>
+            <fieldset>
+              <legend>Post Message</legend>
+              <label for="summary">Summary:</label>
+              <input id="summary" type="text" bind-value="growlForm.summary" required="required" autocomplete="off"/>
+              <label for="detail">Detail:</label>
+              <input id="detail" type="text" bind-value="growlForm.detail" required="required" autocomplete="off"/>
+              <label for="severity">Severity:</label>
+              <select id="severity" bind-value="growlForm.severity">
+                <option value="info">Info</option>
+                <option value="warn">Warn</option>
+                <option value="error">Error</option>
+                <option value="fatal">Fatal</option>
+              </select>
+            </fieldset>
+            <button class="btn btn-primary" on-click="growlForm.postGrowlMessage($event)">Post</button>
+          </form>
+          
+          <pre class="prettyprint lang-html" data-lang="HTML"
+>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;link rel="import" href="packages/html_components/components/utility/growl.html"/&gt;
+    &lt;link rel="import" href="packages/html_components/components/utility/growl_message.html"/&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;form&gt;
+      &lt;fieldset&gt;
+        &lt;legend&gt;Post Message&lt;/legend&gt;
+        &lt;label for="summary"&gt;Summary:&lt;/label&gt;
+        &lt;input id="summary" type="text" bind-value="growlForm.summary" required="required" autocomplete="off"/&gt;
+        &lt;label for="detail"&gt;Detail:&lt;/label&gt;
+        &lt;input id="detail" type="text" bind-value="growlForm.detail" required="required" autocomplete="off"/&gt;
+        &lt;label for="severity"&gt;Severity:&lt;/label&gt;
+        &lt;select id="severity" bind-value="growlForm.severity"&gt;
+          &lt;option value="info"&gt;Info&lt;/option&gt;
+          &lt;option value="warn"&gt;Warn&lt;/option&gt;
+          &lt;option value="error"&gt;Error&lt;/option&gt;
+          &lt;option value="fatal"&gt;Fatal&lt;/option&gt;
+        &lt;/select&gt;
+      &lt;/fieldset&gt;
+      &lt;button class="btn btn-primary" on-click="growlForm.postGrowlMessage($event)"&gt;Post&lt;/button&gt;
+    &lt;/form&gt;
+    
+    &lt;div is="x-growl"&gt;
+      &lt;div is="x-growl-message" summary="Default severity is info" detail="Message detail"&gt;&lt;/div&gt;
+      &lt;div is="x-growl-message" summary="Info" detail="Message detail" severity="info"&gt;&lt;/div&gt;
+      &lt;div is="x-growl-message" summary="Warn" detail="Message detail" severity="warn"&gt;&lt;/div&gt;
+      &lt;div is="x-growl-message" summary="Error" detail="Message detail" severity="error"&gt;&lt;/div&gt;
+      &lt;div is="x-growl-message" summary="Fatal" detail="Message detail" severity="fatal"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</pre>
+
+          <pre class="prettyprint lang-dart" data-lang="Dart"
+>import "package:web_ui/web_ui.dart";
+import "dart:html";
+import "dart:async";
+import "package:html_components/components/utility/growl.dart";
+
+@observable
+class GrowlForm {
+  String summary = "";
+  String detail = "";
+  String severity = "info";
+  
+  void postGrowlMessage(MouseEvent event) {
+    if (summary == "" || detail == "") {
+      return;
+    }
+    
+    GrowlComponent.postMessage(summary, detail, severity);
+    
+    summary = "";
+    detail = "";
+    severity = "info";
+    
+    event.preventDefault();
+  }
+}
+
+GrowlForm growlForm = new GrowlForm();
+
+void main() {
+  
+}</pre>
+        </div>
+      </div>
+    </div>
+    
+    <footer>
+      <div class="container-fluid">
+        <div>
+          <p>&copy; <script>document.write(new Date().getFullYear())</script> Gabor Szabo</p>
+        </div>
+      </div>
+    </footer>
+    
+    <div is="x-growl">
+      <div is="x-growl-message" summary="Default severity is info" detail="Message detail"></div>
+      <div is="x-growl-message" summary="Info" detail="Message detail" severity="info"></div>
+      <div is="x-growl-message" summary="Warn" detail="Message detail" severity="warn"></div>
+      <div is="x-growl-message" summary="Error" detail="Message detail" severity="error"></div>
+      <div is="x-growl-message" summary="Fatal" detail="Message detail" severity="fatal"></div>
+    </div>
+    
+    <script type="application/dart" src="utility_growl.dart"></script>
+    <script src="js/jquery-2.0.2.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/run_prettify.js"></script>
+    <script src="js/lang-dart.js"></script>
+    <script src="packages/browser/dart.js"></script>
+  </body>
+</html>

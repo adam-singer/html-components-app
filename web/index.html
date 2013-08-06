@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <title>HTML Components</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="author" content="Gabor Szabo"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap-responsive.min.css"/>
+    <link rel="stylesheet" href="css/style.css"/>
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="index.html">HTML Components</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active"><a href="index.html">Home</a></li>
+              <li class="dropdown">
+                <a href="components.html" class="dropdown-toggle" data-toggle="dropdown">Components <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <template iterate="category in data.getComponentCategories()">
+                    <li><a href="{{category.url}}">{{category.name}}</a></li>
+                  </template>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="container">
+      <div class="hero-unit">
+        <h1>HTML Components</h1>
+        <p>This application demonstrates the behavior and usability of the web components based project called HTML Components.</p>
+        <p>The application was tested in Google Chrome browser, with the exception of the feed reader component that only works in Dartium right now.</p>
+        <p>The name <i>Web Components</i> refers to a family of new W3C standard working drafts that aim to introduce object oriented concepts into HTML.</p>
+        <p>With them we can create custom elements and reusable HTML fragments.</p>
+        <a href="components.html" class="btn btn-primary btn-large">Start Here &raquo;</a>
+      </div>
+      
+      <div class="row">
+        <div class="span4">
+          <h2>GitHub</h2>
+          <p>For the source code of the HTML Components project, visit GitHub!</p>
+          <p><a class="btn" href="https://github.com/szgabsz91/html-components">GitHub</a></p>
+        </div>
+        <div class="span4">
+          <h2>Pub</h2>
+          <p>If you want to use HTML Components in your Dart application, follow the instructions here:</p>
+          <p><a class="btn" href="http://pub.dartlang.org/packages/html_components">Pub</a></p>
+       </div>
+        <div class="span4">
+          <h2>About Dart</h2>
+          <p>For more information about the Dart language, visit dartlang.org!</p>
+          <p><a class="btn" href="http://www.dartlang.org">Dart</a></p>
+        </div>
+      </div>
+    </div>
+    
+    <footer>
+      <div class="container">
+        <div>
+          <p>&copy; <script>document.write(new Date().getFullYear())</script> Gabor Szabo</p>
+        </div>
+      </div>
+    </footer>
+    
+    <script src="js/jquery-2.0.2.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="packages/browser/dart.js"></script>
+  </body>
+</html>

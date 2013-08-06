@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <title>HTML Components - Orderlist</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="author" content="Gabor Szabo"/>
+    <link rel="import" href="packages/html_components/components/data/orderlist.html"/>
+    <link rel="import" href="packages/html_components/components/utility/growl.html"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap-responsive.min.css"/>
+    <link rel="stylesheet" href="css/prettify.css"/>
+    <link rel="stylesheet" href="css/style.css"/>
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="index.html">HTML Components</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li><a href="index.html">Home</a></li>
+              <li class="dropdown">
+                <a href="components.html" class="dropdown-toggle" data-toggle="dropdown">Components <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="data.html">Data</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="container-fluid">
+      <div class="page-header">
+        <h1>Orderlist Component</h1>
+        <ul class="breadcrumb">
+          <li><a href="components.html">HTML Components</a> <span class="divider">/</span></li>
+          <li><a href="data.html">Data Components</a> <span class="divider">/</span></li>
+          <li class="active">Orderlist</li>
+        </ul>
+      </div>
+      
+      <div class="row-fluid">
+        <div class="span2">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header">Data</li>
+              <li class="active"><a href="data_orderlist.html">Orderlist</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="span10">
+          <form>
+            <fieldset>
+              <legend>Strings</legend>
+              <div is="x-orderlist"
+                   class="strings"
+                   moveuplabel="Up"
+                   movetoplabel="Top"
+                   movedownlabel="Down"
+                   movebottomlabel="Bottom">
+                <header>
+                  <i>Players</i>
+                </header>
+              </div>
+              <pre class="prettyprint lang-html" data-lang="HTML"
+>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;link rel="import" href="packages/html_components/components/data/orderlist.html"/&gt;
+    &lt;link rel="import" href="packages/html_components/components/utility/growl.html"/&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div is="x-orderlist"
+         class="strings"
+         moveuplabel="Up"
+         movetoplabel="Top"
+         movedownlabel="Down"
+         movebottomlabel="Bottom"&gt;
+      &lt;header&gt;
+        &lt;i&gt;Players&lt;/i&gt;
+      &lt;/header&gt;
+    &lt;/div&gt;
+    
+    &lt;div is="x-growl" lifetime="5000"&gt;&lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</pre>
+            </fieldset>
+            
+            <fieldset>
+              <legend>Custom Objects</legend>
+              <div is="x-orderlist"
+                   class="players"
+                   height="500">
+                <header>Players</header>
+                <template>
+                  <img src="img/players/${imagePath}" alt="${name}"/>
+                  ${name} - ${number}
+                </template>
+              </div>
+              <pre class="prettyprint lang-html" data-lang="HTML"
+>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;link rel="import" href="packages/html_components/components/data/orderlist.html"/&gt;
+    &lt;link rel="import" href="packages/html_components/components/utility/growl.html"/&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div is="x-orderlist"
+         class="players"
+         height="500"&gt;
+      &lt;header&gt;Players&lt;/header&gt;
+      &lt;template&gt;
+        &lt;img src="img/players/${imagePath}" alt="${name}"/&gt;
+        ${name} - ${number}
+      &lt;/template&gt;
+    &lt;/div&gt;
+    
+    &lt;div is="x-growl" lifetime="5000"&gt;&lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</pre>
+            </fieldset>
+            
+            <fieldset>
+              <legend>Dart Code</legend>
+              <pre class="prettyprint lang-dart" data-lang="Dart"
+>import "package:web_ui/web_ui.dart";
+import "dart:html";
+import "dart:async";
+import "package:html_components/components/data/orderlist.dart";
+import "package:html_components/components/utility/growl.dart";
+import "data/data.dart" as data;
+
+void main() {
+  Timer.run(() {
+    queryAll('div[is="x-orderlist"]').forEach((Element element) {
+      OrderlistComponent orderlistComponent = element.xtag;
+      
+      orderlistComponent.onChanged.listen((Event event) {
+        String order = data.convertListToString(orderlistComponent.model.items);
+        GrowlComponent.postMessage("New order:", order);
+      });
+    });
+    
+    query('div[is="x-orderlist"].strings').xtag.items = data.getPlayerNames();
+    query('div[is="x-orderlist"].players').xtag.items = data.getPlayers();
+  });
+}</pre>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+    <footer>
+      <div class="container-fluid">
+        <div>
+          <p>&copy; <script>document.write(new Date().getFullYear())</script> Gabor Szabo</p>
+        </div>
+      </div>
+    </footer>
+    
+    <div is="x-growl" lifetime="5000"></div>
+    
+    <script type="application/dart" src="data_orderlist.dart"></script>
+    <script src="js/jquery-2.0.2.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/run_prettify.js"></script>
+    <script src="js/lang-dart.js"></script>
+    <script src="packages/browser/dart.js"></script>
+  </body>
+</html>

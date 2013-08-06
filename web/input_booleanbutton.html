@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <title>HTML Components - Boolean Button</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="author" content="Gabor Szabo"/>
+    <link rel="import" href="packages/html_components/components/input/booleanbutton.html"/>
+    <link rel="import" href="packages/html_components/components/utility/growl.html"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap-responsive.min.css"/>
+    <link rel="stylesheet" href="css/prettify.css"/>
+    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="input_booleanbutton.css"/>
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="index.html">HTML Components</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li><a href="index.html">Home</a></li>
+              <li class="dropdown">
+                <a href="components.html" class="dropdown-toggle" data-toggle="dropdown">Components <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="input.html">Input</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="container-fluid">
+      <div class="page-header">
+        <h1>Boolean Button Component</h1>
+        <ul class="breadcrumb">
+          <li><a href="components.html">HTML Components</a> <span class="divider">/</span></li>
+          <li><a href="input.html">Input Components</a> <span class="divider">/</span></li>
+          <li class="active">Boolean Button</li>
+        </ul>
+      </div>
+      
+      <div class="row-fluid">
+        <div class="span2">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header">Input</li>
+              <li class="active"><a href="input_booleanbutton.html">Boolean Button</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="span10">
+          <div is="x-booleanbutton"
+               labelon="{{booleanButtonForm.labelOn}}"
+               labeloff="{{booleanButtonForm.labelOff}}"
+               showicon="{{booleanButtonForm.showIcon}}"
+               pressed="{{booleanButtonForm.pressed}}">
+          </div>
+          
+          <form>
+            <fieldset>
+              <legend>Configuration</legend>
+              <label for="label-on">Label On:</label>
+              <input id="label-on" type="text" bind-value="booleanButtonForm.labelOn"/>
+              <label for="label-off">Label Off:</label>
+              <input id="label-off" type="text" bind-value="booleanButtonForm.labelOff"/>
+              <label class="checkbox">
+                <input type="checkbox" bind-checked="booleanButtonForm.showIcon"/>
+                Show icon
+              </label>
+              <label class="checkbox">
+                <input type="checkbox" bind-checked="booleanButtonForm.pressed"/>
+                Pressed
+              </label>
+            </fieldset>
+          </form>
+          
+          <pre class="prettyprint data-html" data-lang="HTML"
+>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;link rel="import" href="packages/html_components/components/input/booleanbutton.html"/&gt;
+    &lt;link rel="import" href="packages/html_components/components/utility/growl.html"/&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div is="x-booleanbutton"
+         labelon=""
+         labeloff=""
+         showicon=""
+         pressed=""&gt;
+    &lt;/div&gt;
+    
+    &lt;form&gt;
+      &lt;fieldset&gt;
+        &lt;legend&gt;Configuration&lt;/legend&gt;
+        &lt;label for="label-on"&gt;Label On:&lt;/label&gt;
+        &lt;input id="label-on" type="text" bind-value="booleanButtonForm.labelOn"/&gt;
+        &lt;label for="label-off"&gt;Label Off:&lt;/label&gt;
+        &lt;input id="label-off" type="text" bind-value="booleanButtonForm.labelOff"/&gt;
+        &lt;label class="checkbox"&gt;
+          &lt;input type="checkbox" bind-checked="booleanButtonForm.showIcon"/&gt;
+          Show icon
+        &lt;/label&gt;
+        &lt;label class="checkbox"&gt;
+          &lt;input type="checkbox" bind-checked="booleanButtonForm.pressed"/&gt;
+          Pressed
+        &lt;/label&gt;
+      &lt;/fieldset&gt;
+    &lt;/form&gt;
+    
+    &lt;div is="x-growl" lifetime="5000"&gt;&lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</pre>
+          
+          <pre class="prettyprint lang-dart" data-lang="Dart"
+>import "package:web_ui/web_ui.dart";
+import "dart:html";
+import "dart:async";
+import "package:html_components/components/input/booleanbutton.dart";
+import "package:html_components/components/utility/growl.dart";
+
+@observable
+class BooleanButtonForm {
+  String labelOn = "On";
+  String labelOff = "Off";
+  bool showIcon = false;
+  bool pressed = false;
+}
+
+BooleanButtonForm booleanButtonForm = new BooleanButtonForm();
+
+void main() {
+  Timer.run(() {
+    queryAll('div[is="x-booleanbutton"]').forEach((Element element) {
+      BooleanButtonComponent booleanButtonComponent = element.xtag;
+      
+      booleanButtonComponent.onValueChanged.listen((Event event) {
+        bool newValue = booleanButtonComponent.pressed;
+        booleanButtonForm.pressed = newValue;
+        GrowlComponent.postMessage("Value changed!", "New value: $newValue");
+      });
+    });
+  });
+}</pre>
+        </div>
+      </div>
+    </div>
+    
+    <footer>
+      <div class="container-fluid">
+        <div>
+          <p>&copy; <script>document.write(new Date().getFullYear())</script> Gabor Szabo</p>
+        </div>
+      </div>
+    </footer>
+    
+    <div is="x-growl" lifetime="5000"></div>
+    
+    <script type="application/dart" src="input_booleanbutton.dart"></script>
+    <script src="js/jquery-2.0.2.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/run_prettify.js"></script>
+    <script src="js/lang-dart.js"></script>
+    <script src="packages/browser/dart.js"></script>
+  </body>
+</html>
